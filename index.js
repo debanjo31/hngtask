@@ -4,7 +4,7 @@ const app = express();
 app.get('/api', (req, res) => {
   const slackName = req.query.slack_name;
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  const utcTime = new Date().toUTCString();
+  const utcTime = new Date().toISOString().slice(0, -5) + 'Z';
   const track = req.query.track;
   const githubUrl = 'https://github.com/debanjo31/hngtask'; 
   const sourceCodeUrl = 'https://github.com/debanjo31/hngtask/blob/main/index.js';
@@ -26,8 +26,8 @@ app.get('/api', (req, res) => {
     current_day: currentDay,
     utc_time: utcTime,
     track: track,
-    github_file_url: githubFileUrl,
-    github_repo_url: githubRepoUrl,
+    github_file_url: sourceCodeUrl,
+    github_repo_url: githubUrl,
     status_code: 200,
   };
 
@@ -36,7 +36,7 @@ app.get('/api', (req, res) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
